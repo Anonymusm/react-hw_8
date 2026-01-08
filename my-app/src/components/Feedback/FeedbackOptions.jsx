@@ -1,5 +1,3 @@
-import React from "react";
-
 export const FeedbackOptions = ({ onGood, onNeutral, onBad }) => {
   return (
     <div>

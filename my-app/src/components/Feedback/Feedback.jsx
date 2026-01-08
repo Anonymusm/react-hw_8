@@ -1,54 +1,44 @@
-import React from "react";
+import { useState } from "react";
 import { Section } from "./Section";
 
-class Feedback extends React.Component {
-  state = {
-    good: 0,
-    neutral: 0,
-    bad: 0,
+export default function Feedback() {
+  const [good, setGood] = useState(0);
+    const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
+
+  function goodFeedback() {
+  setGood(prev => prev + 1)
   };
 
-  goodFeedback = () => {
-    this.setState((prevState) => ({ good: prevState.good + 1 }));
+  function neutralFeedback() {
+  setNeutral(prev => prev + 1)
   };
 
-  neutralFeedback = () => {
-    this.setState((prevState) => ({ neutral: prevState.neutral + 1 }));
+  function badFeedback() {
+  setBad(prev => prev + 1)
   };
 
-  badFeedback = () => {
-    this.setState((prevState) => ({ bad: prevState.bad + 1 }));
-  };
-
-  countTotalFeedback = () => {
-    const { good, neutral, bad } = this.state;
+  function countTotalFeedbacks() {
     return good + neutral + bad;
   };
 
-  countPositiveFeedbackPercentage = () => {
-    const { good } = this.state;
-    const total = this.countTotalFeedback();
+  function countPositiveFeedbackPercentage() {
+    const total = countTotalFeedbacks();
     return total === 0 ? 0 : ((good / total) * 100).toFixed(0);
   };
-
-  render() {
-    const { good, neutral, bad } = this.state;
-
     return (
       <div className="feedback">
         <Section
           good={good}
           neutral={neutral}
           bad={bad}
-          onGood={this.goodFeedback}
-          onNeutral={this.neutralFeedback}
-          onBad={this.badFeedback}
-          total={this.countTotalFeedback()}
-          positivePercentage={this.countPositiveFeedbackPercentage()}
+          onGood={goodFeedback}
+          onNeutral={neutralFeedback}
+          onBad={badFeedback}
+          total={countTotalFeedbacks()}
+          positivePercentage={countPositiveFeedbackPercentage()}
         />
       </div>
     );
-  }
 }
 
-export default Feedback;

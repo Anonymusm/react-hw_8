@@ -1,5 +1,3 @@
-import React from "react";
-
 export const Statistics = ({ goodFeedback, neutralFeedback, badFeedback, total, positivePercentage }) => {
   return (
     <div>

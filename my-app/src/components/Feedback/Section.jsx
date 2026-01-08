@@ -1,4 +1,3 @@
-import React from "react";
 import { Statistics } from "./Statistics";
 import { FeedbackOptions } from "./FeedbackOptions";
 
