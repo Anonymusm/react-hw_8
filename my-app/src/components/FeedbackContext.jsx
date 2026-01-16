@@ -37,7 +37,7 @@ export function Context({ children }) {
         refBad.current + refGood.current + refNeutral.current
       }`,
     );
-    return total; // використовуємо вже порахований total
+    return total;
   }
 
   function countPositiveFeedbackPercentage() {
