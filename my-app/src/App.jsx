@@ -1,9 +1,12 @@
 import Feedback from "./components/Feedback/Feedback";
+import { Context, FeedbackContext } from "./components/FeedbackContext";
 
 function App() {
   return (
     <>
-      <Feedback />
+<Context>
+  <Feedback />
+</Context>
     </>
   );
 }

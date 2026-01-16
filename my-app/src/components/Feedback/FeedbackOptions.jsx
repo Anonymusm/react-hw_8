@@ -1,9 +1,14 @@
-export const FeedbackOptions = ({ onGood, onNeutral, onBad }) => {
+import { useContext } from "react";
+import { FeedbackContext } from "../FeedbackContext";
+
+export const FeedbackOptions = () => {
+  const { goodFeedback, neutralFeedback, badFeedback } = useContext(FeedbackContext);
+  
   return (
     <div>
-      <button type="button" onClick={onGood}>Good</button>
-      <button type="button" onClick={onNeutral}>Neutral</button>
-      <button type="button" onClick={onBad}>Bad</button>
+      <button type="button" onClick={goodFeedback}>Good</button>
+      <button type="button" onClick={neutralFeedback}>Neutral</button>
+      <button type="button" onClick={badFeedback}>Bad</button>
     </div>
   );
 };
