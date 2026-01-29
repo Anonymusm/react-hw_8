@@ -1,32 +1,61 @@
-import { createContext, useState, useRef } from "react";
+import { createContext, useRef, useReducer } from "react";
 
 export const FeedbackContext = createContext();
 
+function reducer(state, action) {
+  switch (action.type) {
+    case "GOOD": {
+      return {
+        ...state,
+        good: state.good + 1,
+      };
+    }
+    case "BAD": {
+      return {
+        ...state,
+        bad: state.bad + 1,
+      };
+    }
+    case "NEUTRAL": {
+      return {
+        ...state,
+        neutral: state.neutral + 1,
+      };
+    }
+    default:
+      return state;
+  }
+}
+
 export function Context({ children }) {
-  const [good, setGood] = useState(0);
-  const [neutral, setNeutral] = useState(0);
-  const [bad, setBad] = useState(0);
+  const initialState = {
+    good: 0,
+    neutral: 0,
+    bad: 0,
+  };
+
+  const [feedback, dispatch] = useReducer(reducer, initialState);
 
   const refGood = useRef(0);
   const refNeutral = useRef(0);
   const refBad = useRef(0);
 
-  const total = good + neutral + bad;
+  const total = feedback.good + feedback.neutral + feedback.bad;
 
   function goodFeedback() {
-    setGood((prev) => prev + 1);
+    dispatch({ type: "GOOD" });
     refGood.current += 1;
     console.log(`Good: ${refGood.current}`);
   }
 
   function neutralFeedback() {
-    setNeutral((prev) => prev + 1);
+    dispatch({ type: "NEUTRAL" });
     refNeutral.current += 1;
     console.log(`Neutral: ${refNeutral.current}`);
   }
 
   function badFeedback() {
-    setBad((prev) => prev + 1);
+    dispatch({ type: "BAD" });
     refBad.current += 1;
     console.log(`Bad: ${refBad.current}`);
   }
@@ -41,8 +70,10 @@ export function Context({ children }) {
   }
 
   function countPositiveFeedbackPercentage() {
-    return total === 0 ? 0 : ((good / total) * 100).toFixed(0);
+    return total === 0 ? 0 : ((feedback.good / total) * 100).toFixed(0);
   }
+
+  const { good, bad, neutral } = feedback;
 
   return (
     <FeedbackContext.Provider
@@ -50,7 +81,7 @@ export function Context({ children }) {
         good,
         neutral,
         bad,
-        total, 
+        total,
         goodFeedback,
         neutralFeedback,
         badFeedback,
